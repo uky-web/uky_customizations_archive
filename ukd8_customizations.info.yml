@@ -1,0 +1,5 @@
+name: 'UKD8 Customizations'
+type: module
+description: 'Theme and admin customizations'
+core: 8.x
+package: 'Custom'

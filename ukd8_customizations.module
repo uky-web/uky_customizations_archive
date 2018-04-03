@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains ukd8_customizations.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ukd8_customizations_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the ukd8_customizations module.
+    case 'help.page.ukd8_customizations':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Theme and admin customizations') . '</p>';
+      return $output;
+
+    default:
+  }
+}
