@@ -37,6 +37,8 @@ class Extension extends \Twig_Extension {
       new \Twig_SimpleFilter('entity_view', [$this, 'entityView']),
       // html_decode_entities
       new \Twig_SimpleFilter('unescape', [$this, 'unescape']),
+      // child elements
+      new \Twig_SimpleFilter('children', [$this, 'children']),
     ];
   }
 
@@ -62,6 +64,15 @@ class Extension extends \Twig_Extension {
         new \Twig_SimpleFunction('lang_alias', [$this, 'langAlias']),
     ];
   }
+
+  public function getTokenParsers()
+  {
+      return [
+        new Project_include_TokenParser(),
+        new Project_embed_TokenParser(),
+      ];
+  }
+
 
   /**
    * Remove HTML comments (from e.g., a field with Twig debug output on)
@@ -309,6 +320,11 @@ class Extension extends \Twig_Extension {
      return \Drupal::service('path.alias_manager')->getAliasByPath($system_path, $lang);
    }
 
-
+  /**
+   * Get the render children of a field
+   */
+  public static function children($variable) {
+    return array_filter($variable, function($k) { return (is_numeric($k) || (strpos($k, '#')!==0)); }, ARRAY_FILTER_USE_KEY);
+  }
   
 }
