@@ -39,6 +39,8 @@ class Extension extends \Twig_Extension {
       new \Twig_SimpleFilter('unescape', [$this, 'unescape']),
       // child elements
       new \Twig_SimpleFilter('children', [$this, 'children']),
+      // social media matcher
+      new \Twig_SimpleFilter('matchsocial', [$this, 'socialMatcher']),
     ];
   }
 
@@ -323,8 +325,17 @@ class Extension extends \Twig_Extension {
   /**
    * Get the render children of a field
    */
-  public static function children($variable) {
+  public function children($variable) {
     return array_filter($variable, function($k) { return (is_numeric($k) || (strpos($k, '#')!==0)); }, ARRAY_FILTER_USE_KEY);
   }
+
+  /** 
+   * Figure out a social media label from a URL
+   */
+  public function socialMatcher($url) {
+    $components = parse_url($url);
+    $host_pieces = explode('.', $components['host']);
+    return $host_pieces[count($host_pieces) - 2];
+  } 
   
 }
