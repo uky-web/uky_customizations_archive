@@ -41,6 +41,8 @@ class Extension extends \Twig_Extension {
       new \Twig_SimpleFilter('children', [$this, 'children']),
       // social media matcher
       new \Twig_SimpleFilter('matchsocial', [$this, 'socialMatcher']),
+      // inject a class in a render array
+      new \Twig_SimpleFilter('injectclass', [$this, 'injectClass']),
     ];
   }
 
@@ -336,6 +338,21 @@ class Extension extends \Twig_Extension {
     $components = parse_url($url);
     $host_pieces = explode('.', $components['host']);
     return $host_pieces[count($host_pieces) - 2];
+  } 
+
+  /** 
+   * Add a class to a render array
+   */
+  public function injectClass($build, $class) {
+    if (is_array($build)) {
+      if (is_string($class)) {
+        $build['#attributes']['class'][] = $class;
+      }
+      if (is_array($class)) {
+        $build['#attributes']['class'] += $class;
+      }
+    }
+    return $build;
   } 
   
 }
