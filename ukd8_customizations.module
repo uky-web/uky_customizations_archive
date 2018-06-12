@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_help().
@@ -20,5 +21,19 @@ function ukd8_customizations_help($route_name, RouteMatchInterface $route_match)
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_form_alter() to alter exposed forms.
+ */
+function ukd8_customizations_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // customizations for event submission
+  $all_day_forms = [
+    'node_event_form', 'node_event_edit_form',
+  ];
+  if (in_array($form_id, $all_day_forms)) {
+    $form['#attached']['library'][] = 'ukd8_customizations/all-day';
+    $form['#attached']['drupalSettings']['ukd8_customizations']['all_day']['all_day'] = false;
   }
 }

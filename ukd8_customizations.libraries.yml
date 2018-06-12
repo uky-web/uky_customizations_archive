@@ -1,0 +1,7 @@
+all-day:
+  version: 1.x
+  js:
+    js/all-day.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

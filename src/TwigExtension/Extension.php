@@ -66,6 +66,8 @@ class Extension extends \Twig_Extension {
         new \Twig_SimpleFunction('render_term_lookup', [$this, 'renderTermLookup'], ['is_safe' => ['html']]),
         // return an alias for a language
         new \Twig_SimpleFunction('lang_alias', [$this, 'langAlias']),
+        // simplify a date range with ranger
+        new \Twig_SimpleFunction('ranger', [$this, 'simplifyDateRange']),
     ];
   }
 
@@ -354,5 +356,44 @@ class Extension extends \Twig_Extension {
     }
     return $build;
   } 
+
+  /** 
+   * helper function: return an enumerated constant for the format
+   */
+  private function getIntlDateFormat($format) {
+    switch ($format) {
+      case 'none':
+        return \IntlDateFormatter::NONE;
+      case 'full':
+        return \IntlDateFormatter::FULL;
+      case 'long':
+        return \IntlDateFormatter::LONG;
+      case 'medium':
+        return \IntlDateFormatter::MEDIUM;
+      case 'short':
+        return \IntlDateFormatter::SHORT;
+    }
+    return \IntlDateFormatter::MEDIUM;
+  }
+
+  /**
+   * Simplify a date range
+   */
+  public function simplifyDateRange($start, $end, $date_format = 'medium', $time_format = 'short', $range_separator = null, $date_time_separator = null) {
+    require_once(__DIR__ . '/../../vendor/autoload.php');
+    $date_format = $this->getIntlDateFormat($date_format);
+    $time_format = $this->getIntlDateFormat($time_format);
   
+    $ranger = new \OpenPsa\Ranger\Ranger('en');
+    $ranger
+      ->setDateType($date_format)
+      ->setTimeType($time_format);
+    if (!is_null($date_time_separator)) {
+      $ranger->setDateTimeSeparator($date_time_separator);
+    }
+    if (!is_null($range_separator)) {
+      $ranger->setRangeSeparator($range_separator);
+    }
+    return $ranger->format($start, $end);
+  }
 }
