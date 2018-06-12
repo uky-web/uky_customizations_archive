@@ -394,6 +394,15 @@ class Extension extends \Twig_Extension {
     if (!is_null($range_separator)) {
       $ranger->setRangeSeparator($range_separator);
     }
+    if (is_numeric($start)) {
+      $start = date('c', $start);
+    }
+    if (is_numeric($end)) {
+      $end = date('c', $end);
+    }
+    if (empty($end)) {
+      $end = $start;
+    }
     return $ranger->format($start, $end);
   }
 }
