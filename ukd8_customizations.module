@@ -37,3 +37,13 @@ function ukd8_customizations_form_alter(&$form, FormStateInterface $form_state, 
     $form['#attached']['drupalSettings']['ukd8_customizations']['all_day']['all_day'] = false;
   }
 }
+
+/**
+ * Implements hook_toolbar_alter() to modify toolbar items
+ */
+function ukd8_customizations_toolbar_alter(&$items) {
+  // change the name on the contextual edit button
+  if (isset($items['contextual'])) {
+    $items['contextual']['tab']['#value'] = t('Toggle in-page edit options');
+  }
+}
