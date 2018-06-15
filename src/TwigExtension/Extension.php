@@ -43,6 +43,8 @@ class Extension extends \Twig_Extension {
       new \Twig_SimpleFilter('matchsocial', [$this, 'socialMatcher']),
       // inject a class in a render array
       new \Twig_SimpleFilter('injectclass', [$this, 'injectClass']),
+      // just wrap PHP uniqid()
+      new \Twig_SimpleFilter('uniqid', [$this, 'uniqid']),
     ];
   }
 
@@ -205,8 +207,8 @@ class Extension extends \Twig_Extension {
    * wrap PHP uniqid
    * @return str hash
    */
-  public function uniqid() {
-    return uniqid();
+  public function uniqid($prefix = '') {
+    return $prefix . '-' . uniqid();
   }
   
   /**
