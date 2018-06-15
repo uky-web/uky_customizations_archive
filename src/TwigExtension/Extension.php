@@ -45,6 +45,8 @@ class Extension extends \Twig_Extension {
       new \Twig_SimpleFilter('injectclass', [$this, 'injectClass']),
       // just wrap PHP uniqid()
       new \Twig_SimpleFilter('uniqid', [$this, 'uniqid']),
+      // attribution array -> key=value set
+      new \Twig_SimpleFilter('attr_list', [$this, 'attrList']),
     ];
   }
 
@@ -407,4 +409,20 @@ class Extension extends \Twig_Extension {
     }
     return $ranger->format($start, $end);
   }
+
+  public function attrList($arr) {
+    $str = '';
+    if (is_array($arr)) {
+        $attributes = [];
+        while(list($key,$value) = each($arr)) {
+            $key = str_replace('_','-',$key);
+            $attributes[] = $key . '=' . $value;
+        }
+        if (!empty($attributes)) {
+            $str = join($attributes,' ');
+        }
+    }
+    return $str;
+  }
+
 }
