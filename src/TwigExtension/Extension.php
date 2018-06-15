@@ -47,6 +47,8 @@ class Extension extends \Twig_Extension {
       new \Twig_SimpleFilter('uniqid', [$this, 'uniqid']),
       // attribution array -> key=value set
       new \Twig_SimpleFilter('attr_list', [$this, 'attrList']),
+      // try to fix a time timezone
+      new \Twig_SimpleFilter('tz_adjust', [$this, 'tzAdjust']),
     ];
   }
 
@@ -423,6 +425,17 @@ class Extension extends \Twig_Extension {
         }
     }
     return $str;
+  }
+
+  public function tzAdjust($datetime) {
+    if (empty($datetime)) return '';
+    if (is_numeric($datetime)) {
+      $datetime = date('c', $datetime);
+    }
+    $date = new \DateTime($datetime, new \DateTimeZone('UTC'));
+    $tz = drupal_get_user_timezone();
+    $date->setTimezone(new \DateTimeZone($tz));
+    return $date->format('Y-m-d g:i a');
   }
 
 }
