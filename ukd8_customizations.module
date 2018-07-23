@@ -36,6 +36,23 @@ function ukd8_customizations_form_alter(&$form, FormStateInterface $form_state, 
     $form['#attached']['library'][] = 'ukd8_customizations/all-day';
     $form['#attached']['drupalSettings']['ukd8_customizations']['all_day']['all_day'] = false;
   }
+
+  if (isset($form['field_theme_color_scheme'])) {
+    // limit options available to component
+    $theme_settings = \Drupal::config('ukd8.settings');
+    $entity = $form_state->getFormObject()->getEntity();
+    $type = $entity->getEntityTypeId();
+    $bundle = $entity->bundle();
+    $theme_config_key = $type . "__" . $bundle;
+
+    // remove options
+    $component_settings = $theme_settings->get('scheme_settings');
+    if (isset($component_settings[$theme_config_key]['disallowed'])) {
+      foreach ($component_settings[$theme_config_key]['disallowed'] as $d) {
+        unset($form['field_theme_color_scheme']['widget']['#options'][$d]);
+      }
+    }
+  }
 }
 
 /**
