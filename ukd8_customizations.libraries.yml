@@ -5,3 +5,10 @@ all-day:
   dependencies:
     - core/jquery
     - core/drupalSettings
+theme-selector:
+  version: 1.x
+  js:
+    js/theme-selector.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

@@ -47,24 +47,32 @@ function ukd8_customizations_field_widget_form_alter(&$element, FormStateInterfa
     $theme_settings = \Drupal::config('ukd8.settings');
     $component_settings = $theme_settings->get('scheme_settings');
 
-    // override the theme options
-    $element['#options'] = array_merge(
-      [
-        '' => '- Theme default -',
-      ],
-      $theme_settings->get('scheme_options')
-    );
-
     // figure out if some options are disallowed
     if (isset($element['#entity_type']) && isset($element['#bundle'])) {
       $type = $element['#entity_type'];
       $bundle = $element['#bundle'];
       $theme_config_key = $type . "__" . $bundle;
+
+      // override the theme options
+      $opts = array_merge(
+        [
+          '' => '- Theme default -',
+        ],
+        $theme_settings->get('scheme_options')
+      );
+
       if (isset($component_settings[$theme_config_key]['disallowed'])) {
         foreach ($component_settings[$theme_config_key]['disallowed'] as $d) {
-          unset($element['#options'][$d]);
+          unset($opts[$d]);
         }
       }
+
+      // ugh, do it with js
+      $element['#attached']['library'][] = 'ukd8_customizations/theme-selector';
+      $element['theme_selector'] = [
+        '#type' => 'select',
+        '#options' => $opts,
+      ];
     }
   }
 }
