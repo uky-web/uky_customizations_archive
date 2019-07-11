@@ -416,7 +416,7 @@ class Extension extends \Twig_Extension {
     $str = '';
     if (is_array($arr)) {
         $attributes = [];
-        while(list($key,$value) = each($arr)) {
+        foreach($arr as $key => $value) {
             $key = str_replace('_','-',$key);
             $attributes[] = $key . '=' . $value;
         }
