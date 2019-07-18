@@ -1,7 +1,7 @@
 {
     "name": "uky-web/ukd8_customizations",
     "description": "UKD8 theme and admin support features.",
-    "type": "drupal-module",
+    "type": "drupal-custom-module",
     "require": {
         "openpsa/ranger": "^0.3.1"
     }
