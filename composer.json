@@ -1,6 +1,7 @@
 {
     "name": "uky-web/ukd8_customizations",
     "description": "UKD8 theme and admin support features.",
+    "license": "MIT",
     "type": "drupal-custom-module",
     "require": {
         "openpsa/ranger": "^0.3.1"
