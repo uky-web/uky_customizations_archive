@@ -421,7 +421,7 @@ class Extension extends \Twig_Extension {
             $attributes[] = $key . '=' . $value;
         }
         if (!empty($attributes)) {
-            $str = join($attributes,' ');
+            $str = join(' ',$attributes);
         }
     }
     return $str;
