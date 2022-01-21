@@ -4,6 +4,6 @@
     "license": "MIT",
     "type": "drupal-custom-module",
     "require": {
-        "openpsa/ranger": "^0.3.1"
+        "openpsa/ranger": "^0.5.2"
     }
 }

@@ -6,8 +6,9 @@ use \Twig_TokenParser_Embed;
 use \Twig_Token;
 use \Twig_Node_Embed;
 
-class Project_embed_TokenParser extends Twig_TokenParser_Embed {
-    public function parse(Twig_Token $token) 
+
+class Project_embed_TokenParser extends \Twig\TokenParser\AbstractTokenParser {
+    public function parse(\Twig\Token $token) 
     {
         $stream = $this->parser->getStream();
         $parent = $this->parser->getExpressionParser()->parseExpression();
@@ -37,10 +38,46 @@ class Project_embed_TokenParser extends Twig_TokenParser_Embed {
         $stream
             ->expect(Twig_Token::BLOCK_END_TYPE);
 
-        return new Twig_Node_Embed($module
-            ->getAttribute('filename'), $module
+        return new \Twig\Node\EmbedNode($module
+            ->getTemplateName(), $module
             ->getAttribute('index'), $variables, $only, $ignoreMissing, $token
             ->getLine(), $this
             ->getTag());
     }
+
+    public function getTag(){
+        return 'embed';
+    }
+
+    public function decideBlockEnd(\Twig\Token $token)
+    {
+        return $token->test('endembed');
+    }
+
+    protected function parseArguments()
+    {
+        $stream = $this->parser->getStream();
+
+        $ignoreMissing = false;
+        if ($stream->nextIf(/* Token::NAME_TYPE */ 5, 'ignore')) {
+            $stream->expect(/* Token::NAME_TYPE */ 5, 'missing');
+
+            $ignoreMissing = true;
+        }
+
+        $variables = null;
+        if ($stream->nextIf(/* Token::NAME_TYPE */ 5, 'with')) {
+            $variables = $this->parser->getExpressionParser()->parseExpression();
+        }
+
+        $only = false;
+        if ($stream->nextIf(/* Token::NAME_TYPE */ 5, 'only')) {
+            $only = true;
+        }
+
+        $stream->expect(/* Token::BLOCK_END_TYPE */ 3);
+
+        return [$variables, $only, $ignoreMissing];
+    }
+    
 }
