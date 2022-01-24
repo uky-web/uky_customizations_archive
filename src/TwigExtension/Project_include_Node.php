@@ -5,9 +5,9 @@ namespace Drupal\ukd8_customizations\TwigExtension;
 use \Twig_Compiler;
 use \Twig_Node_Include;
 
-class Project_include_Node extends Twig_Node_Include
+class Project_include_Node extends \Twig\Node\IncludeNode
 {
-    public function compile(Twig_Compiler $compiler)
+    public function compile(\Twig\Compiler $compiler)
     {
         $expr = $this->getNode('expr');
 

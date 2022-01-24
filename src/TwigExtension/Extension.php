@@ -7,7 +7,7 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\image\Entity\ImageStyle;
 use \Twig_Environment;
 
-class Extension extends \Twig_Extension {
+class Extension extends \Twig\Extension\AbstractExtension {
 
   /**
    * Gets a unique identifier for this Twig extension.
