@@ -433,7 +433,7 @@ class Extension extends \Twig\Extension\AbstractExtension {
       $datetime = date('c', $datetime);
     }
     $date = new \DateTime($datetime, new \DateTimeZone('UTC'));
-    $tz = drupal_get_user_timezone();
+    $tz = date_default_timezone_get();
     $date->setTimezone(new \DateTimeZone($tz));
     return $date->format('Y-m-d g:i a');
   }
