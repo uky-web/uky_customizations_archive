@@ -3,6 +3,12 @@
     "description": "UKD8 theme and admin support features.",
     "license": "MIT",
     "type": "drupal-custom-module",
+    "authors": [
+        {
+            "name": "University of Kentucky Webcom",
+            "email": "universitywebservices@l.uky.edu"
+        }
+    ],
     "require": {
         "openpsa/ranger": "^0.5.2"
     }
