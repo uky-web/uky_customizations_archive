@@ -332,11 +332,14 @@ class Extension extends \Twig\Extension\AbstractExtension {
      return \Drupal::service('path.alias_manager')->getAliasByPath($system_path, $lang);
    }
 
-  /**
+   /**
    * Get the render children of a field
    */
   public function children($variable) {
-    return array_filter($variable, function($k) { return (is_numeric($k) || (strpos($k, '#')!==0)); }, ARRAY_FILTER_USE_KEY);
+    if (is_array($variable)){
+      return array_filter($variable, function($k) { return (is_numeric($k) || (strpos($k, '#')!==0)); }, ARRAY_FILTER_USE_KEY);
+    }
+    return array();
   }
 
   /** 
