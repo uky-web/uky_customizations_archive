@@ -1,5 +1,5 @@
 name: 'UKD8 Customizations'
 type: module
 description: 'Theme and admin customizations'
-core_version_requirement: ^9.4 || ^10
+core_version_requirement: ^9.5 || ^10
 package: 'Custom'
