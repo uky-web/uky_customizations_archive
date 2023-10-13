@@ -2,12 +2,11 @@
 
 namespace Drupal\ukd8_customizations\TwigExtension;
 
-use \Twig_Compiler;
-use \Twig_Node_Include;
+use Twig\Compiler;
+use Twig\Node\IncludeNode;
 
-class Project_include_Node extends \Twig\Node\IncludeNode
-{
-    public function compile(\Twig\Compiler $compiler)
+class Project_include_Node extends IncludeNode {
+    public function compile(Compiler $compiler): void
     {
         $expr = $this->getNode('expr');
 
@@ -19,8 +18,7 @@ class Project_include_Node extends \Twig\Node\IncludeNode
         $compiler->addDebugInfo($this);
 
         if ($name) {
-            $compiler
-                ->write("echo '<!-- TWIG INCLUDE : " . $name . "\" -->';\n");
+            $compiler->write("echo '<!-- TWIG INCLUDE : " . $name . "\" -->';\n");
         }
 
         if ($this->getAttribute('ignore_missing')) {
@@ -41,7 +39,7 @@ class Project_include_Node extends \Twig\Node\IncludeNode
         if ($this->getAttribute('ignore_missing')) {
             $compiler
                 ->outdent()
-                ->write("} catch (Twig_Error_Loader \$e) {\n")
+                ->write("} catch (\\Twig\\Error\\LoaderError \$e) {\n")
                 ->indent()
                 ->write("// ignore missing template\n")
                 ->outdent()
@@ -50,8 +48,7 @@ class Project_include_Node extends \Twig\Node\IncludeNode
         }
 
         if ($name) {
-            $compiler
-                 ->write("echo '<!-- END TWIG INCLUDE : " . $name . "\" -->';\n");
+            $compiler->write("echo '<!-- END TWIG INCLUDE : " . $name . "\" -->';\n");
         }
     }
 }
