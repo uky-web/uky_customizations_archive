@@ -22,33 +22,33 @@ class Extension extends \Twig\Extension\AbstractExtension {
   public function getFilters() {
     return [
       // remove HTML comments from markup
-      new \Twig_SimpleFilter('nocomment', [$this, 'removeHtmlComments']),
+      new \Twig\TwigFilter('nocomment', [$this, 'removeHtmlComments']),
       // an alternate image style (from https://www.drupal.org/files/issues/twig_image_style-2361299-31.patch)
-      new \Twig_SimpleFilter('resize', [$this, 'getImageFieldWithStyle']),
+      new \Twig\TwigFilter('resize', [$this, 'getImageFieldWithStyle']),
       // smart truncate
-      new \Twig_SimpleFilter('smarttrim', [$this, 'smartTrim']),
+      new \Twig\TwigFilter('smarttrim', [$this, 'smartTrim']),
       // get an alias for an entity
-      new \Twig_SimpleFilter('alias', [$this, 'entityAlias']),
+      new \Twig\TwigFilter('alias', [$this, 'entityAlias']),
       // check if a view has any content
-      new \Twig_SimpleFilter('has_rows', [$this, 'viewHasRows']),
+      new \Twig\TwigFilter('has_rows', [$this, 'viewHasRows']),
       // remove empty items from an array
-      new \Twig_SimpleFilter('array_filter', 'array_filter'),
+      new \Twig\TwigFilter('array_filter', 'array_filter'),
       // run the builder on an entity
-      new \Twig_SimpleFilter('entity_view', [$this, 'entityView']),
+      new \Twig\TwigFilter('entity_view', [$this, 'entityView']),
       // html_decode_entities
-      new \Twig_SimpleFilter('unescape', [$this, 'unescape']),
+      new \Twig\TwigFilter('unescape', [$this, 'unescape']),
       // child elements
-      new \Twig_SimpleFilter('children', [$this, 'children']),
+      new \Twig\TwigFilter('children', [$this, 'children']),
       // social media matcher
-      new \Twig_SimpleFilter('matchsocial', [$this, 'socialMatcher']),
+      new \Twig\TwigFilter('matchsocial', [$this, 'socialMatcher']),
       // inject a class in a render array
-      new \Twig_SimpleFilter('injectclass', [$this, 'injectClass']),
+      new \Twig\TwigFilter('injectclass', [$this, 'injectClass']),
       // just wrap PHP uniqid()
-      new \Twig_SimpleFilter('uniqid', [$this, 'uniqid']),
+      new \Twig\TwigFilter('uniqid', [$this, 'uniqid']),
       // attribution array -> key=value set
-      new \Twig_SimpleFilter('attr_list', [$this, 'attrList']),
+      new \Twig\TwigFilter('attr_list', [$this, 'attrList']),
       // try to fix a time timezone
-      new \Twig_SimpleFilter('tz_adjust', [$this, 'tzAdjust']),
+      new \Twig\TwigFilter('tz_adjust', [$this, 'tzAdjust']),
     ];
   }
 
@@ -59,21 +59,21 @@ class Extension extends \Twig\Extension\AbstractExtension {
   {
     return [
         // just wrap PHP uniqid()
-        new \Twig_SimpleFunction('uniqid', [$this, 'uniqid']),
+        new \Twig\TwigFunction('uniqid', [$this, 'uniqid']),
         // svg injection
-        new \Twig_SimpleFunction('svg', [$this, 'svg'], ['is_safe' => ['html']]),
+        new \Twig\TwigFunction('svg', [$this, 'svg'], ['is_safe' => ['html']]),
         // xdebug breakpoint (based on https://github.com/ajgarlag/AjglBreakpointTwigExtension)
-        new \Twig_SimpleFunction('xdebug', [$this, 'setBreakpoint'], ['needs_environment' => true, 'needs_context' => true]),
+        new \Twig\TwigFunction('xdebug', [$this, 'setBreakpoint'], ['needs_environment' => true, 'needs_context' => true]),
         // uri -> url
-        new \Twig_SimpleFunction('uritourl', [$this, 'uriToUrl']),
+        new \Twig\TwigFunction('uritourl', [$this, 'uriToUrl']),
         // load a term from a tid
-        new \Twig_SimpleFunction('term_lookup', [$this, 'termLookup']),
+        new \Twig\TwigFunction('term_lookup', [$this, 'termLookup']),
         // return a rendered term based on a field in the term
-        new \Twig_SimpleFunction('render_term_lookup', [$this, 'renderTermLookup'], ['is_safe' => ['html']]),
+        new \Twig\TwigFunction('render_term_lookup', [$this, 'renderTermLookup'], ['is_safe' => ['html']]),
         // return an alias for a language
-        new \Twig_SimpleFunction('lang_alias', [$this, 'langAlias']),
+        new \Twig\TwigFunction('lang_alias', [$this, 'langAlias']),
         // simplify a date range with ranger
-        new \Twig_SimpleFunction('ranger', [$this, 'simplifyDateRange']),
+        new \Twig\TwigFunction('ranger', [$this, 'simplifyDateRange']),
     ];
   }
 
@@ -267,7 +267,7 @@ class Extension extends \Twig\Extension\AbstractExtension {
   /**
    * set an xdebug breakpoint (if the extension is available)
    */
-  public function setBreakpoint(Twig_Environment $environment, $context)
+  public function setBreakpoint(\Twig\Environment $environment, $context)
   {
     if (function_exists('xdebug_break')) {
       $arguments = array_slice(func_get_args(), 2);
