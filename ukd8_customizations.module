@@ -41,7 +41,7 @@ function ukd8_customizations_form_alter(&$form, FormStateInterface $form_state, 
 /**
  * Implements hook_field_wdget_form_alter().
  */
-function ukd8_customizations_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+function ukd8_customizations_field_widget_single_element_form_alter(&$element, FormStateInterface $form_state, $context) {
   if ($context['items']->getName() == 'field_theme_color_scheme') {
     // limit options available to component
     $theme_settings = \Drupal::config('ukd8.settings');
